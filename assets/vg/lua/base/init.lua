@@ -1,0 +1,5 @@
+require "base.whichkey"
+require "base.lspconfig"
+require "base.lspinstaller"
+require "base.editorconfig"
+require "base.linter"

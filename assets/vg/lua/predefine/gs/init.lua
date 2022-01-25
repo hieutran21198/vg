@@ -1,0 +1,1 @@
+MAIN.g.manage {mapleader = " "}

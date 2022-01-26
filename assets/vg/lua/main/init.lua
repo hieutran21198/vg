@@ -12,18 +12,20 @@ MAIN = {
 }
 
 MAIN.reload = function()
-    local prefix_dirs = {"^main", "^utils", "^predefine"}
+    local prefix_dirs = {"^main", "^utils", "^predefine", "^base"}
     for name, _ in pairs(package.loaded) do
         for _, dir in ipairs(prefix_dirs) do
-            if name:match(dir) then package.loaded[name] = nil end
+            if name:match(dir) then
+                package.loaded[name] = nil
+            end
         end
     end
     dofile(MAIN.paths.app_config_dir .. "/config.lua")
     dofile(MAIN.paths.app_runtime_dir .. "/init.lua")
-    if vim.fn
-        .delete(MAIN.paths.app_runtime_dir .. "/plugin/packer_compiled.lua") ~=
-        0 then print("cannot delete cached compile plugins") end
-    require"packer".compile()
+    if vim.fn.delete(MAIN.paths.app_runtime_dir .. "/plugin/packer_compiled.lua") ~= 0 then
+        print("cannot delete cached compile plugins")
+    end
+    require "packer".compile()
 end
 
 MAIN.bootstrap = function(params)
@@ -32,8 +34,7 @@ MAIN.bootstrap = function(params)
     require "base"
     -- load user config
     local utils = require "utils"
-    local user_config_filepath = vim.env.HOME .. "/.config/" ..
-                                     MAIN.paths.appname .. "/config.lua"
+    local user_config_filepath = vim.env.HOME .. "/.config/" .. MAIN.paths.appname .. "/config.lua"
     if utils.file_exists(user_config_filepath) then
         utils.load_file(user_config_filepath)
     else

@@ -2,18 +2,22 @@ MAIN.configs["cmp"] = {
     setup = {
         snippet = {
             expand = function(args)
-                require"snippy".expand_snippet(args.body)
+                require "snippy".expand_snippet(args.body)
             end
         },
         sources = {
-            {name = "nvim_lsp"}, {name = "snippy"}, {name = "path"},
-            {name = "cmp_tabnine"}, {name = "buffer"}
+            {name = "nvim_lsp"},
+            {name = "snippy"},
+            {name = "path"},
+            {name = "cmp_tabnine"},
+            {name = "buffer"}
         },
         formatting = {
             format = function(entry, item)
                 local symbol = MAIN.configs["cmp"].symbols
                 item.kind = symbol[item.kind]
-                item.menu = ({
+                item.menu =
+                    ({
                     buffer = "[Buffer]",
                     nvim_lsp = "[LSP]",
                     snippy = "[Snippet]",
@@ -31,15 +35,15 @@ MAIN.configs["cmp"] = {
                 ["<C-d>"] = cmp.mapping.scroll_docs(-4),
                 ["<C-f>"] = cmp.mapping.scroll_docs(4),
                 ["<C-Space>"] = cmp.mapping.complete(),
-                ["<C-e>"] = cmp.mapping({
-                    i = cmp.mapping.abort(),
-                    c = cmp.mapping.close()
-                }),
+                ["<C-e>"] = cmp.mapping(
+                    {
+                        i = cmp.mapping.abort(),
+                        c = cmp.mapping.close()
+                    }
+                ),
                 ["<CR>"] = cmp.mapping.confirm({select = true}),
-                ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(),
-                                        {"i", "s"}),
-                ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(),
-                                          {"i", "s"})
+                ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
+                ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "s"})
             }
             return params
         end

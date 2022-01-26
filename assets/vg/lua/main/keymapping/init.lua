@@ -23,22 +23,26 @@ local service = {}
 
 service.manage = function(maps, native)
     if native ~= nil then
-        for k, v in pairs(maps) do store_native[k] = v end
+        for k, v in pairs(maps) do
+            store_native[k] = v
+        end
     else
-        for _, v in ipairs(maps) do table.insert(store, v) end
+        for _, v in ipairs(maps) do
+            table.insert(store, v)
+        end
     end
 end
 
 service.set = function(keymappings, native)
-    if keymappings == nil then return end
+    if keymappings == nil then
+        return
+    end
     if native ~= nil then
         for mode, mappings in pairs(keymappings) do
             local vim_mode = mode_adapters[mode] and mode_adapters[mode] or mode
             for k, v in pairs(mappings) do
                 local val = v
-                local opts =
-                    generic_opts[vim_mode] and generic_opts[vim_mode] or
-                        generic_opts_any
+                local opts = generic_opts[vim_mode] and generic_opts[vim_mode] or generic_opts_any
                 if type(v) == "table" then
                     opts = v[2]
                     val = v[1]

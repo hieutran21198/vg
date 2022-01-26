@@ -2,7 +2,9 @@ local store = {}
 local M = {
     manage = function(cmds)
         if cmds ~= nil then
-            for k, v in pairs(cmds) do store[k] = v end
+            for k, v in pairs(cmds) do
+                store[k] = v
+            end
         else
             return store
         end
@@ -20,6 +22,8 @@ local M = {
     end
 }
 
-function M.compile() M.set(store) end
+function M.compile()
+    M.set(store)
+end
 
 return M

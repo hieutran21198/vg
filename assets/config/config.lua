@@ -8,10 +8,10 @@ require "predefine.completion"
 require "predefine.comment"
 require "predefine.terminal"
 require "predefine.autopairs"
+require "predefine.lualine"
 
 require "predefine.formatters"
 require "predefine.linters"
-
 
 MAIN.plugin_manager.store {
     ["altercation/vim-colors-solarized"] = {},

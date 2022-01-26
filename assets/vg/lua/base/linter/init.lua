@@ -7,7 +7,9 @@ MAIN.plugin_manager.store {
                 }
             }
             local ok, linters = pcall(require, "lint")
-            if not ok then return end
+            if not ok then
+                return
+            end
             linters.linters_by_ft = MAIN.linters()
         end
     }

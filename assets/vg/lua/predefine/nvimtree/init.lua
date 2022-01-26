@@ -5,7 +5,9 @@ MAIN.plugin_manager.store {
         requires = {"kyazdani42/nvim-web-devicons"},
         config = function()
             local ok, nvim_tree = pcall(require, "nvim-tree")
-            if not ok then return end
+            if not ok then
+                return
+            end
             local conf = MAIN.configs["nvimtree"]
             local setup = conf.setup
             MAIN.g.set(conf.g)

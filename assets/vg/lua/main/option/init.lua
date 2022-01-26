@@ -3,7 +3,9 @@ local M = {}
 
 M.manage = function(opts)
     if opts ~= nil then
-        for k, v in pairs(opts) do options[k] = v end
+        for k, v in pairs(opts) do
+            options[k] = v
+        end
     else
         return options
     end
@@ -14,7 +16,9 @@ M.compile = function()
     local cmd = vim.cmd
     for k, v in pairs(options) do
         if k == "line_wrap_cursor_movement" then
-            if v == true then cmd "set whichwrap+=<,>,[,],h,l" end
+            if v == true then
+                cmd "set whichwrap+=<,>,[,],h,l"
+            end
         elseif k == "transparent" then
             if v == true then
                 cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"

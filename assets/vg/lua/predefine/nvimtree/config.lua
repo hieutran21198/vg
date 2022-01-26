@@ -2,8 +2,10 @@ MAIN.configs["nvimtree"] = {
     g = {},
     lazy_setup = {
         function(setup)
-            local tree_cb = require"nvim-tree.config".nvim_tree_callback
-            if setup.view == nil then setup.view = {} end
+            local tree_cb = require "nvim-tree.config".nvim_tree_callback
+            if setup.view == nil then
+                setup.view = {}
+            end
             if setup.view.mappings == nil then
                 setup.view.mappings = {}
             end

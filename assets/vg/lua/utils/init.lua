@@ -19,10 +19,16 @@ return {
     end,
     load_file = function(filepath)
         local lf, error = pcall(vim.cmd, "luafile " .. filepath)
-        if not lf then print(error) end
+        if not lf then
+            print(error)
+        end
     end,
     is_included = function(arr, k)
-        for _, v in ipairs(arr) do if v == k then return true end end
+        for _, v in ipairs(arr) do
+            if v == k then
+                return true
+            end
+        end
         return false
     end
 }

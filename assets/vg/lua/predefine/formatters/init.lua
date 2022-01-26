@@ -26,7 +26,9 @@ MAIN.formatters {
             return {
                 exe = "prettier",
                 args = {
-                    "--format", "json", "--stdin-filepath",
+                    "--format",
+                    "json",
+                    "--stdin-filepath",
                     vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
                 },
                 stdin = true
@@ -38,7 +40,9 @@ MAIN.formatters {
             return {
                 exe = "shfmt",
                 args = {
-                    "-l", "-w", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+                    "-l",
+                    "-w",
+                    vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
                 },
                 stdin = false
             }
@@ -47,5 +51,12 @@ MAIN.formatters {
 }
 
 MAIN.format_on_save {
-    "*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.yaml", "*.lua", "*.sh"
+    "*.js",
+    "*.jsx",
+    "*.ts",
+    "*.tsx",
+    "*.json",
+    "*.yaml",
+    "*.lua",
+    "*.sh"
 }

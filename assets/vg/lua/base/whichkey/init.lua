@@ -5,7 +5,9 @@ MAIN.plugin_manager.store {
         config = function()
             local conf = MAIN.configs["keymappings"]
             local ok, wk = pcall(require, "which-key")
-            if not ok then return end
+            if not ok then
+                return
+            end
             wk.setup(conf.setup)
         end
     }

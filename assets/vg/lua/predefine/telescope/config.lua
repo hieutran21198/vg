@@ -39,8 +39,14 @@ MAIN.configs["telescope"] = {
         set_env = {["COLORTERM"] = "truecolor"},
         defaults = {
             vimgrep_arguments = {
-                "rg", "--color=never", "--no-heading", "--with-filename",
-                "--line-number", "--column", "--smart-case", "-u"
+                "rg",
+                "--color=never",
+                "--no-heading",
+                "--with-filename",
+                "--line-number",
+                "--column",
+                "--smart-case",
+                "-u"
             }
         }
     }
@@ -53,7 +59,8 @@ MAIN.keymappings.manage {
                 ["f"] = {"<cmd>Telescope find_files<cr>", "Find files"},
                 ["r"] = {"<cmd>Telescope oldfiles<cr>", "Recent files"},
                 ["s"] = {"<cmd>Telescope live_grep<cr>", "Search"},
-                ["T"] = {"<cmd>Telescope colorscheme<cr>", "Colorschemes"}
+                ["T"] = {"<cmd>Telescope colorscheme<cr>", "Colorschemes"},
+                ["o"] = {"<cmd>Telescope file_browser<cr>", "Open file"}
             }
         },
         opts = {

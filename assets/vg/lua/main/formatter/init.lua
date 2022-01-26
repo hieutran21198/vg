@@ -16,4 +16,3 @@ return {
         return format_on_save
     end
 }
-

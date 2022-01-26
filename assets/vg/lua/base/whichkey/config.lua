@@ -32,7 +32,14 @@ MAIN.configs["keymappings"] = {
         },
         triggers = "auto",
         hidden = {
-            "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "
+            "<silent>",
+            "<cmd>",
+            "<Cmd>",
+            "<CR>",
+            "call",
+            "lua",
+            "^:",
+            "^ "
         },
         show_help = true
     },

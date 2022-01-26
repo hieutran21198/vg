@@ -9,7 +9,7 @@ MAIN.configs["lspconfig"] = {
             end
             return opts
         end,
-        function(opts, name)
+        function(opts, _)
             MAIN.configs["lspconfig"].set_on_attach(
                 opts,
                 function(_, bufnr)
@@ -18,10 +18,11 @@ MAIN.configs["lspconfig"] = {
                             group = {
                                 ["K"] = {"<cmd>lua vim.lsp.buf.hover()<cr>", "Show hover"},
                                 ["g"] = {
-                                    ["r"] = {"<cmd>Trouble lsp_references<CR>", "References"},
-                                    ["d"] = {"<cmd>Trouble lsp_definitions<cr>", "Definitions"},
+                                    ["r"] = {"<cmd>lua vim.lsp.buf.references()<CR>", "References"},
+                                    ["d"] = {"<cmd>lua vim.lsp.buf.definition()<cr>", "Definitions"},
                                     ["D"] = {"<cmd>lua vim.lsp.buf.declaration()<cr>", "Declarations"},
-                                    ["I"] = {"<cmd>Trouble lsp_implementations<cr>", "Implementations"}
+                                    ["I"] = {"<cmd>lua vim.lsp.buf.Implementation()<cr>", "Implementations"},
+                                    ["a"] = {"<cmd>lua vim.lsp.buf.code_action()<cr>", "Actions"}
                                 },
                                 ["["] = {
                                     ["g"] = {"<cmd>lua vim.diagnostic.goto_prev()<CR>", "LSP goto previous mark"}
@@ -32,7 +33,9 @@ MAIN.configs["lspconfig"] = {
                                 ["<leader>"] = {
                                     ["l"] = {
                                         name = "LSP",
-                                        ["d"] = {"<cmd>TroubleToggle document_diagnostics<cr>", "Diagnostics"}
+                                        ["a"] = {"<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Actions"},
+                                        ["d"] = {"<cmd>lua vim.diagnostic.open_float()<cr>", "Diagnostics"},
+                                        ["f"] = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Format buffer"}
                                     }
                                 },
                                 ["<F2>"] = {"<cmd>lua vim.lsp.buf.rename()<cr>", "Rename"}

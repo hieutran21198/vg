@@ -2,7 +2,7 @@ MAIN.keymappings.manage {
     {
         group = {
             ["<leader>"] = {
-                ["g"] = {
+                ["G"] = {
                     name = "Git",
                     ["b"] = {"<cmd>Git blame<cr>", "Git blame"},
                     ["s"] = {"<cmd>Git status<cr>", "Git status"}

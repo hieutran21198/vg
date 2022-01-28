@@ -4,6 +4,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"os/exec"
@@ -14,10 +15,10 @@ import (
 )
 
 var (
-	appname   = flag.String("appname", "vg", "define application name to install.")
-	srcdir    = flag.String("src", os.ExpandEnv("$HOME/.local/share"), "define application src directory.")
-	bindir    = flag.String("bin", os.ExpandEnv("$HOME/.local/bin"), "define application src directory.")
-	deepclean = flag.Bool("deepclean", false, "remove all backup file")
+	appname = flag.String("appname", "vg", "define application name to install.")
+	srcdir  = flag.String("src", "$HOME/.local/share", "define application src directory.")
+	bindir  = flag.String("bin", "$HOME/.local/bin", "define application src directory.")
+	force   = flag.Bool("force", false, "force to install application")
 )
 
 func main() {
@@ -34,8 +35,44 @@ func main() {
 	}
 	log.Printf("operating system detected: %s - %s", detectedOS, runtime.GOARCH)
 	log.Printf("nvim wrapper '%s' will be installed to your system", *appname)
+	srcpath := os.ExpandEnv(filepath.Join(*srcdir, *appname))
+	binpath := os.ExpandEnv(filepath.Join(*bindir, *appname))
+	backup(srcpath)
 
-	createBinaryFile()
+	binContent := fmt.Sprintf(`
+        #!/bin/sh
+        export APPNAME=%s
+        exec nvim -u "/home/pinocirius/.local/share/%s/init.lua"
+    `, *appname, *appname)
+	defer log.Printf("binary file '%s' has been created", binpath)
+	binfile, err := os.OpenFile(binpath, os.O_TRUNC|os.O_CREATE|os.O_RDWR, 0666)
+	if err != nil {
+		panic(fmt.Errorf("cannot open binfile: %s", err.Error()))
+	}
+	defer binfile.Close()
+	if _, err := binfile.WriteString(binContent); err != nil {
+		panic(fmt.Errorf("cannot write application binary content: %s", err.Error()))
+	}
+	if err := cmd("chmod", "+x", binpath).Run(); err != nil {
+		panic(fmt.Errorf("cannot provided executing permission to %s: %s", binpath, err.Error()))
+	}
+}
+
+func cmd(name string, args ...string) *exec.Cmd {
+	var (
+		errio io.Writer = os.Stderr
+		outio io.Writer = os.Stdout
+	)
+	c := exec.Command(name, args...)
+	if c.Stderr != nil {
+		errio = io.MultiWriter(os.Stderr, c.Stderr)
+	}
+	if c.Stdout != nil {
+		outio = io.MultiWriter(os.Stdout, c.Stdout)
+	}
+	c.Stderr = errio
+	c.Stdout = outio
+	return c
 }
 
 func backup(a string) {
@@ -46,32 +83,11 @@ func backup(a string) {
 	if err != nil {
 		panic(err)
 	}
-	name, dir := filepath.Split(a)
-	now := time.Now().Local()
-	bakname := fmt.Sprintf("%s_bak_%s", name, now)
+	_, dir := filepath.Split(a)
+	now := time.Now().Local().Format("2006-01-02_15-04-05")
+	bakname := fmt.Sprintf("%s_bak_%s", a, now)
 	bakpath := filepath.Join(dir, bakname)
-	if err := exec.Command("mv", a, bakpath); err != nil {
-		panic(fmt.Errorf("cannot backup file: '%s'", a))
-	}
-}
-
-func createBinaryFile() {
-	binContent := fmt.Sprintf(`
-        #!/bin/sh
-        export APPNAME=%s
-        exec nvim -u "/home/pinocirius/.local/share/%s/init.lua"
-    `, *appname, *appname)
-	binpath := filepath.Join(*bindir, *appname)
-	defer log.Printf("binary file '%s' has been created", binpath)
-	binfile, err := os.OpenFile(binpath, os.O_TRUNC|os.O_CREATE|os.O_RDWR, 0666)
-	if err != nil {
-		panic(fmt.Errorf("cannot open binfile: %s", err.Error()))
-	}
-	defer binfile.Close()
-	if _, err := binfile.WriteString(binContent); err != nil {
-		panic(fmt.Errorf("cannot write application binary content: %s", err.Error()))
-	}
-	if err := exec.Command("chmod", "+x", binpath).Run(); err != nil {
-		panic(fmt.Errorf("cannot provided executing permission to %s: %s", binpath, err.Error()))
+	if err := cmd("mv", a, bakpath).Run(); err != nil {
+		panic(fmt.Errorf("cannot backup file: '%s'. Err: %s", a, err.Error()))
 	}
 }

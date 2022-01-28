@@ -71,3 +71,29 @@ MAIN.configs["lspconfig"] = {
         end
     end
 }
+
+MAIN.keymappings.set {
+    {
+        group = {
+            ["<leader>"] = {
+                ["L"] = {
+                    name = "LSP Installer",
+                    ["I"] = {"<cmd>LspInfo<cr>", "LSP Information"},
+                    ["r"] = {"<cmd>LspRestart<cr>", "LSP restart"},
+                    ["i"] = {":LspInstall ", "LSP install {...protocols}"},
+                    ["l"] = {"<cmd>LspPrintInstalled<cr>", "LSP list installed protocols"},
+                    ["x"] = {"<cmd>LspStop<cr>", "LSP stop"},
+                    ["u"] = {":LspUninstall ", "LSP uninstall {...protocols}"}
+                },
+                ["z"] = {"<cmd>LspRestart<cr>", "LSP restart"}
+            }
+        },
+        otps = {
+            mode = "n",
+            buffer = nil,
+            silent = true,
+            noremap = true,
+            nowait = true
+        }
+    }
+}

@@ -35,6 +35,20 @@ MAIN.formatters {
             }
         end
     },
+    yaml = {
+        function()
+            return {
+                exe = "prettier",
+                args = {
+                    "--format",
+                    "yaml",
+                    "--stdin-filepath",
+                    vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+                },
+                stdin = true
+            }
+        end
+    },
     sh = {
         function()
             return {
@@ -58,5 +72,6 @@ MAIN.format_on_save {
     "*.json",
     "*.yaml",
     "*.lua",
-    "*.sh"
+    "*.sh",
+    "*.yml"
 }

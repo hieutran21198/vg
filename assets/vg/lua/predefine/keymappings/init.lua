@@ -16,6 +16,10 @@ MAIN.keymappings.manage {
                 ["R"] = {
                     "<cmd>lua MAIN.reload()<cr>",
                     "Reload " .. MAIN.paths.appname
+                },
+                ["c"] = {
+                    name = "Clear | Close",
+                    ["h"] = {'<cmd>let @/=""<cr>', "Hightlight"}
                 }
             }
         },

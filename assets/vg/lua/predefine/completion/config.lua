@@ -9,7 +9,6 @@ MAIN.configs["cmp"] = {
             {name = "nvim_lsp"},
             {name = "snippy"},
             {name = "path"},
-            {name = "cmp_tabnine"},
             {name = "buffer"}
         },
         formatting = {
@@ -21,8 +20,7 @@ MAIN.configs["cmp"] = {
                     buffer = "[Buffer]",
                     nvim_lsp = "[LSP]",
                     snippy = "[Snippet]",
-                    neorg = "[Neorg]",
-                    cmp_tabnine = "[TN]"
+                    neorg = "[Neorg]"
                 })[entry.source.name]
                 return item
             end

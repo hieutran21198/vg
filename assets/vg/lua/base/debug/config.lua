@@ -57,9 +57,29 @@ MAIN.keymappings.set {
                     ["o"] = {"<cmd>lua require'dapui'.toggle()<cr>", "Toggle Debug UI"},
                     ["i"] = {":DIInstall ", "Install new debuggers"},
                     ["l"] = {"<cmd>DIList<cr>", "List installed debuggers"},
-                    ["I"] = {":DIUninstall ", "Uninstall debuggers"}
+                    ["I"] = {":DIUninstall ", "Uninstall debuggers"},
+                    ["z"] = {"<cmd>lua require'dap'.run_last()<cr>", "Run last"},
+                    ["r"] = {"<cmd>lua require'dap'.repl.open()<cr>", "Open repl"}
                 }
-            }
+            },
+            ["g"] = {
+                ["b"] = {"<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle debug breakpoints"},
+                ["B"] = {
+                    "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>",
+                    "Debug breakpoint condition"
+                },
+                ["l"] = {
+                    name = "Log",
+                    ["p"] = {
+                        "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>",
+                        "Debug log point message"
+                    }
+                }
+            },
+            ["<F5>"] = {"<cmd>lua require'dap'.continue()<cr>", "Debug Continue"},
+            ["<F10>"] = {"<cmd>lua require'dap'.step_over()<r>", "Debug step over"},
+            ["<F11>"] = {"<cmd>lua require'dap'.step_into()<cr>", "Debug step into"},
+            ["<F12>"] = {"<cmd>lua require'dap'.step_out()<cr>", "Debug step out"}
         },
         opts = {
             mode = "n",

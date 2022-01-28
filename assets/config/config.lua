@@ -9,6 +9,7 @@ require "predefine.comment"
 require "predefine.terminal"
 require "predefine.autopairs"
 require "predefine.lualine"
+require "predefine.sneak"
 
 require "predefine.formatters"
 require "predefine.linters"

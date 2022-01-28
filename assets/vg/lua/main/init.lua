@@ -8,7 +8,8 @@ MAIN = {
     keymappings = require "main.keymapping",
     linters = require "main.linter",
     formatters = require "main.formatter".formatters,
-    format_on_save = require "main.formatter".format_on_save
+    format_on_save = require "main.formatter".format_on_save,
+    debuggers = require "main.debugger".debuggers
 }
 
 MAIN.reload = function()

@@ -5,8 +5,8 @@ MAIN.keymappings.manage {
                 ["p"] = {
                     name = "Packer",
                     ["i"] = {"<cmd>PackerInstall<cr>", "Install components"},
-                    ["C"] = {"<cmd>PackerCompile<cr>", "Compile"},
-                    ["c"] = {"<cmd>PackerClean<cr>", "Clean"},
+                    ["c"] = {"<cmd>PackerCompile<cr>", "Compile"},
+                    ["C"] = {"<cmd>PackerClean<cr>", "Clean"},
                     ["s"] = {"<cmd>PackerSync<cr>", "Sync"},
                     ["l"] = {"<cmd>PackerLoad<cr>", "Load components"},
                     ["p"] = {"<cmd>PackerProfile<cr>", "Profiling"},

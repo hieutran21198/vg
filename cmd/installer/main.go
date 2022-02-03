@@ -18,7 +18,6 @@ var (
 	appname = flag.String("appname", "vg", "define application name to install.")
 	srcdir  = flag.String("src", "$HOME/.local/share", "define application src directory.")
 	bindir  = flag.String("bin", "$HOME/.local/bin", "define application src directory.")
-	force   = flag.Bool("force", false, "force to install application")
 )
 
 func main() {
@@ -38,12 +37,15 @@ func main() {
 	srcpath := os.ExpandEnv(filepath.Join(*srcdir, *appname))
 	binpath := os.ExpandEnv(filepath.Join(*bindir, *appname))
 	backup(srcpath)
-
+    if err := cmd("cp", "-r" ,"./assets/vg", srcpath).Run();  err != nil {
+        panic(fmt.Errorf("cannot create vg src directory: %s", err.Error()))
+    }
+	log.Printf("'%s' source directory has been created", *appname)
 	binContent := fmt.Sprintf(`
-        #!/bin/sh
-        export APPNAME=%s
-        exec nvim -u "/home/pinocirius/.local/share/%s/init.lua"
-    `, *appname, *appname)
+#!/bin/sh
+export APPNAME=%s
+exec nvim -u "$HOME/.local/share/$APPNAME/init.lua"
+    `, *appname)
 	defer log.Printf("binary file '%s' has been created", binpath)
 	binfile, err := os.OpenFile(binpath, os.O_TRUNC|os.O_CREATE|os.O_RDWR, 0666)
 	if err != nil {
@@ -82,12 +84,10 @@ func backup(a string) {
 	}
 	if err != nil {
 		panic(err)
-	}
-	_, dir := filepath.Split(a)
+	} 
 	now := time.Now().Local().Format("2006-01-02_15-04-05")
 	bakname := fmt.Sprintf("%s_bak_%s", a, now)
-	bakpath := filepath.Join(dir, bakname)
-	if err := cmd("mv", a, bakpath).Run(); err != nil {
+	if err := cmd("mv", a, bakname).Run(); err != nil {
 		panic(fmt.Errorf("cannot backup file: '%s'. Err: %s", a, err.Error()))
 	}
 }

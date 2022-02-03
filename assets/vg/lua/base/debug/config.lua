@@ -52,22 +52,22 @@ MAIN.keymappings.set {
     {
         group = {
             ["<leader>"] = {
-                ["d"] = {
+                ["D"] = {
                     name = "Debug",
-                    ["o"] = {"<cmd>lua require'dapui'.toggle()<cr>", "Toggle Debug UI"},
                     ["i"] = {":DIInstall ", "Install new debuggers"},
                     ["l"] = {"<cmd>DIList<cr>", "List installed debuggers"},
                     ["I"] = {":DIUninstall ", "Uninstall debuggers"},
                     ["z"] = {"<cmd>lua require'dap'.run_last()<cr>", "Run last"},
                     ["r"] = {"<cmd>lua require'dap'.repl.open()<cr>", "Open repl"}
-                }
-            },
-            ["g"] = {
+                },
                 ["b"] = {"<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle debug breakpoints"},
+                ["d"] = {"<cmd>lua require'dapui'.toggle()<cr>", "Toggle Debug UI"},
                 ["B"] = {
                     "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>",
                     "Debug breakpoint condition"
-                },
+                }
+            },
+            ["g"] = {
                 ["l"] = {
                     name = "Log",
                     ["p"] = {

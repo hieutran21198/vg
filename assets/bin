@@ -1,3 +1,3 @@
 #!/bin/sh
 export APPNAME=vg
-exec nvim -u "/home/pinocirius/.local/share/vg/init.lua"
+exec nvim -u "$HOME/.local/share/vg/init.lua"

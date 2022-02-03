@@ -1,5 +1,9 @@
 MAIN = {
-    paths = {app_runtime_dir = "", appname = "", app_config_dir = ""},
+    paths = {
+        app_runtime_dir = "",
+        appname = "",
+        app_config_dir = ""
+    },
     plugin_manager = require "main.plugin_manager",
     configs = {},
     g = require "main.g",
@@ -7,9 +11,10 @@ MAIN = {
     autocmds = require "main.autocmd",
     keymappings = require "main.keymapping",
     linters = require "main.linter",
-    formatters = require "main.formatter".formatters,
-    format_on_save = require "main.formatter".format_on_save,
-    debuggers = require "main.debugger".debuggers
+    formatters = require"main.formatter".formatters,
+    format_on_save = require"main.formatter".format_on_save,
+    debuggers = require"main.debugger".debuggers,
+    colorscheme = nil
 }
 
 MAIN.reload = function()
@@ -26,7 +31,7 @@ MAIN.reload = function()
     if vim.fn.delete(MAIN.paths.app_runtime_dir .. "/plugin/packer_compiled.lua") ~= 0 then
         print("cannot delete cached compile plugins")
     end
-    require "packer".compile()
+    require"packer".compile()
 end
 
 MAIN.bootstrap = function(params)

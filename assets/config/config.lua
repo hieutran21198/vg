@@ -25,9 +25,7 @@ MAIN.plugin_manager.store {
                 return
             end
             MAIN.autocmds.set {
-                _auto_format_go = {
-                    {"BufWritePre", "*.go", ":silent! lua require('go.format').goimport()"}
-                }
+                _auto_format_go = {{"BufWritePre", "*.go", ":silent! lua require('go.format').goimport()"}}
             }
             local on_attach = function(_, bufnr)
                 MAIN.keymappings.set {
@@ -75,7 +73,10 @@ MAIN.plugin_manager.store {
                 test_template = "",
                 test_template_dir = "",
                 comment_placeholder = "",
-                icons = {breakpoint = "??", currentpos = "??"},
+                icons = {
+                    breakpoint = "??",
+                    currentpos = "??"
+                },
                 verbose = false,
                 lsp_cfg = false,
                 lsp_gofumpt = false,
@@ -94,4 +95,7 @@ MAIN.plugin_manager.store {
 }
 
 MAIN.colorscheme = "gruvbox"
-MAIN.options.manage {background = "dark", transparent = false}
+MAIN.options.manage {
+    background = "dark",
+    transparent = false
+}

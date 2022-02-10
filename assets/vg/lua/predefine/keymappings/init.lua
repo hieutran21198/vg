@@ -20,7 +20,8 @@ MAIN.keymappings.manage {
                 ["c"] = {
                     name = "Clear | Close",
                     ["h"] = {'<cmd>let @/=""<cr>', "Hightlight"}
-                }
+                },
+                ["w"] = {"<cmd>w<cr>", "Write to file"}
             }
         },
         opts = {

@@ -17,6 +17,7 @@ require "predefine.linters"
 MAIN.plugin_manager.store {
     ["altercation/vim-colors-solarized"] = {},
     ["morhetz/gruvbox"] = {},
+    ["AlessandroYorba/Alduin"] = {},
     ["ray-x/go.nvim"] = {
         requires = {"nvim-treesitter/nvim-treesitter"},
         config = function()
@@ -55,18 +56,18 @@ MAIN.plugin_manager.store {
                     }
                 }
             end
-            local custom_opt_fn = function(opts, server_name)
-                if server_name ~= "gopls" then
+            MAIN.settings["lspconfig"].set_custom_options {
+                function(opts, server_name)
+                    if server_name ~= "gopls" then
+                        return opts
+                    end
+                    MAIN.settings["lspconfig"].set_on_attach(opts, on_attach)
                     return opts
                 end
-
-                MAIN.configs["lspconfig"].set_on_attach(opts, on_attach)
-                return opts
-            end
-            MAIN.configs["lspconfig"].set_custom_options {custom_opt_fn}
+            }
             go.setup {
                 goimport = "gopls",
-                gopls_cmd = MAIN.configs["lspinstaller"].settings.install_root_dir .. "/go/gopls",
+                gopls_cmd = MAIN.settings["nvim-lsp-installer"].install_root_dir .. "/go/gopls",
                 gofmt = "gofumpt",
                 max_line_len = 120,
                 tag_transform = false,
@@ -94,7 +95,13 @@ MAIN.plugin_manager.store {
     }
 }
 
-MAIN.colorscheme = "gruvbox"
+MAIN.colorscheme = "alduin"
+MAIN.g.manage {
+    -- alduin_Shout_Dragon_Aspect = 1
+    -- alduin_Shout_Become_Ethereal = 1
+    alduin_Shout_Fire_Breath = 1
+    -- alduin_Shout_Aura_Whisper = 1
+}
 MAIN.options.manage {
     background = "dark",
     transparent = false

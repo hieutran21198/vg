@@ -30,5 +30,15 @@ return {
             end
         end
         return false
+    end,
+    require_dep = function(depname, fn)
+        if type(fn) ~= "function" then
+            return
+        end
+        local ok, dep = pcall(require, depname)
+        if not ok then
+            return
+        end
+        fn(dep)
     end
 }

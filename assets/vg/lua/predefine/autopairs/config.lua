@@ -1,4 +1,4 @@
-MAIN.configs["autopairs"] = {
+MAIN.settings["nvim-autopairs"] = {
     setup = {
         break_line_filetype = {
             "javascript",
@@ -14,3 +14,12 @@ MAIN.configs["autopairs"] = {
         }
     }
 }
+
+MAIN.configs["nvim-autopairs"] = function()
+    local ok, autopairs = pcall(require, "nvim-autopairs")
+    if not ok then
+        return
+    end
+    local settings = MAIN.settings["nvim-autopairs"]
+    autopairs.setup(settings.setup)
+end

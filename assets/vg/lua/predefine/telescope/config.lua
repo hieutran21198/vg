@@ -11,7 +11,9 @@ utils.require_dep(
                     mappings = {
                         i = {
                             ["<esc>"] = actions.close,
-                            ["<C-p>"] = action_layout.toggle_preview
+                            ["<C-p>"] = action_layout.toggle_preview,
+                            ["<C-j>"] = actions.cycle_history_prev,
+                            ["<C-k>"] = actions.cycle_history_next
                         }
                     },
                     preview = {hide_on_startup = true},
@@ -24,6 +26,10 @@ utils.require_dep(
                         "--column",
                         "--smart-case",
                         "-u"
+                    },
+                    history = {
+                        path = MAIN.paths.app_runtime_dir .. "/databases/telescope_history.sqlite3",
+                        limit = 100
                     }
                 },
                 prompt_prefix = " ",
@@ -89,4 +95,12 @@ MAIN.configs["telescopeext.file_browser"] = function()
         return
     end
     telescope.load_extension "file_browser"
+end
+
+MAIN.configs["telescopeext.smart_history"] = function()
+    local ok, telescope = pcall(require, "telescope")
+    if not ok then
+        return
+    end
+    telescope.load_extension "smart_history"
 end

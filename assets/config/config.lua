@@ -18,6 +18,7 @@ MAIN.plugin_manager.store {
     ["altercation/vim-colors-solarized"] = {},
     ["morhetz/gruvbox"] = {},
     ["AlessandroYorba/Alduin"] = {},
+    ["mangeshrex/uwu.vim"] = {},
     ["ray-x/go.nvim"] = {
         requires = {"nvim-treesitter/nvim-treesitter"},
         config = function()
@@ -95,13 +96,16 @@ MAIN.plugin_manager.store {
     }
 }
 
-MAIN.colorscheme = "alduin"
-MAIN.g.manage {
-    -- alduin_Shout_Dragon_Aspect = 1
-    -- alduin_Shout_Become_Ethereal = 1
-    alduin_Shout_Fire_Breath = 1
-    -- alduin_Shout_Aura_Whisper = 1
-}
+-- MAIN.colorscheme = "alduin"
+-- MAIN.g.manage {
+--     -- alduin_Shout_Dragon_Aspect = 1
+--     -- alduin_Shout_Become_Ethereal = 1
+--     -- alduin_Shout_Fire_Breath = 1
+--     alduin_Shout_Aura_Whisper = 1
+-- }
+
+-- MAIN.colorscheme = "uwu"
+
 MAIN.options.manage {
     background = "dark",
     transparent = false

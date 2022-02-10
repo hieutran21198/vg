@@ -15,7 +15,19 @@ MAIN = {
     formatters = require "main.formatter".formatters,
     format_on_save = require "main.formatter".format_on_save,
     debuggers = require "main.debugger".debuggers,
-    colorscheme = nil
+    colorscheme = nil,
+    set_colorscheme = function(colorscheme)
+        MAIN.colorscheme = colorscheme
+        local json = require "json"
+        local f = io.open(MAIN.paths.app_config_dir .. "/colorscheme.json", "w+")
+        f:write(json.encode {colorscheme = colorscheme})
+        f:close()
+    end,
+    get_colorscheme = function()
+        local json = require "json"
+        local f = io.open(MAIN.paths.app_config_dir .. "/colorscheme.json", "r")
+        MAIN.colorscheme = json.decode(f:read("*a")).colorscheme
+    end
 }
 
 MAIN.reload = function()
@@ -55,7 +67,8 @@ MAIN.bootstrap = function(params)
     MAIN.g.compile()
     MAIN.keymappings.compile()
     MAIN.autocmds.compile()
-
+    MAIN.get_colorscheme()
+    -- pcall(MAIN.get_colorscheme)
     if MAIN.colorscheme ~= nil and MAIN.colorscheme ~= "" then
         vim.cmd("colorscheme " .. MAIN.colorscheme)
     end

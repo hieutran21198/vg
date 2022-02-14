@@ -26,7 +26,31 @@ MAIN = {
     get_colorscheme = function()
         local json = require "json"
         local f = io.open(MAIN.paths.app_config_dir .. "/colorscheme.json", "r")
-        MAIN.colorscheme = json.decode(f:read("*a")).colorscheme
+        local obj = json.decode(f:read("*a"))
+        MAIN.colorscheme = obj.colorscheme
+        local bg = obj["background"]
+        if bg ~= nil then
+            if bg ~= "auto" then
+                MAIN.options.manage {
+                    background = bg
+                }
+            else
+                local hour = os.date("*t").hour
+                bg = "light"
+                if hour > 18 then
+                    bg = "dark"
+                end
+                print("'" .. bg .. "' theme applied")
+                MAIN.options.manage {
+                    background = bg
+                }
+            end
+        end
+        if obj["transparent"] ~= nil then
+            MAIN.options.manage {
+                transparent = obj["transparent"]
+            }
+        end
     end
 }
 
@@ -63,11 +87,11 @@ MAIN.bootstrap = function(params)
 
     MAIN.plugin_manager.compile()
 
+    MAIN.get_colorscheme()
     MAIN.options.compile()
     MAIN.g.compile()
     MAIN.keymappings.compile()
     MAIN.autocmds.compile()
-    MAIN.get_colorscheme()
     -- pcall(MAIN.get_colorscheme)
     if MAIN.colorscheme ~= nil and MAIN.colorscheme ~= "" then
         vim.cmd("colorscheme " .. MAIN.colorscheme)

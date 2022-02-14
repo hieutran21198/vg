@@ -19,6 +19,8 @@ MAIN.plugin_manager.store {
     ["morhetz/gruvbox"] = {},
     ["AlessandroYorba/Alduin"] = {},
     ["mangeshrex/uwu.vim"] = {},
+    ["jacoborus/tender.vim"] = {},
+    --
     ["ray-x/go.nvim"] = {
         requires = {"nvim-treesitter/nvim-treesitter"},
         config = function()
@@ -42,7 +44,7 @@ MAIN.plugin_manager.store {
                                     ["t"] = {"<cmd>GoAddTag<cr>", "Add tags"},
                                     ["T"] = {"<cmd>GoRmTag<cr>", "Remove tags"},
                                     ["I"] = {"<cmd>GoImpl <cr>", "Implement {receiver} {interface}"},
-                                    ["a"] = {"<cmd>GoAlt!<cr>", "Open alternative file"},
+                                    ["A"] = {"<cmd>GoAlt!<cr>", "Open alternative file"},
                                     ["l"] = {"<cmd>GoLint<cr>", "Lint file"}
                                 }
                             }
@@ -96,17 +98,6 @@ MAIN.plugin_manager.store {
     }
 }
 
--- MAIN.colorscheme = "alduin"
--- MAIN.g.manage {
---     -- alduin_Shout_Dragon_Aspect = 1
---     -- alduin_Shout_Become_Ethereal = 1
---     -- alduin_Shout_Fire_Breath = 1
---     alduin_Shout_Aura_Whisper = 1
--- }
-
--- MAIN.colorscheme = "uwu"
-
 MAIN.options.manage {
-    background = "dark",
     transparent = false
 }

@@ -1,0 +1,175 @@
+snippet service
+    package $0
+
+    type $1 struct {
+    }
+
+    // New initializes $1 service with default config
+    func New() *$1 {
+        s := &$1{}
+        return s
+    }
+snippet model
+    // $0 ${2:represents the $1 model}
+    // swagger:model
+    type $0 struct {
+        Base
+    }
+snippet basemodel
+    package model
+
+    import (
+        "strconv"
+        "time"
+    )
+
+    // Base contains common fields for all models
+    // Do not use gorm.Model because of uint ID
+    type Base struct {
+        ID        int       `json:"id" gorm:"primary_key"`
+        CreatedAt time.Time `json:"created_at"`
+        UpdatedAt time.Time `json:"updated_at"`
+    }
+
+    // NormalizeUID util
+    func NormalizeUID(rid int) string {
+        return strconv.Itoa(rid)
+    }
+snippet mydbservice
+    package $1
+
+    // NewDB returns a new $0 database instance
+    func NewDB() *DBService {
+        return &DBService{}
+    }
+
+    // DB the global DBService for instant use
+    var DB = NewDB()
+
+    // DBService represents the service for $1 table
+    type DBService struct{}
+snippet mydbcreate
+    // Create creates a new $1 on database
+    func (*DBService) Create(db *gorm.DB, md model.$0) (*model.$0, error) {
+        if err := db.Create(&md).Error; err != nil {
+            return nil, err
+        }
+        return &md, nil
+    }
+snippet mydbview
+    // View returns single $1 given conditions
+    func (*DBService) View(db *gorm.DB, cond ...interface{}) (*model.$0, error) {
+        where := dbutil.ParseCond(cond...)
+        var md = new(model.$0)
+        if err := db.First(md, where...).Error; err != nil {
+            if gorm.IsRecordNotFoundError(err) {
+                return nil, nil
+            }
+            return nil, err
+        }
+        return md, nil
+    }
+snippet mydblist
+    // List returns list of $1s retrievable after filter & pagination if given
+    func (*DBService) List(db *gorm.DB, lq *dbutil.ListQueryCondition, count *int) ([]*model.$0, error) {
+        var data []*model.$0
+        // * preloading
+        if err := mydbutil.ListQuery(db, lq, &data, count); err != nil {
+            return nil, err
+        }
+        return data, nil
+    }
+snippet mydbupdate
+    // Update updates $1 info
+    func (*DBService) Update(db *gorm.DB, update interface{}, cond ...interface{}) error {
+        switch u := update.(type) {
+        case *model.$0:
+            db = db.Model(u)
+        case model.$0:
+            db = db.Model(&u)
+        default:
+            db = db.Model(model.$0{})
+        }
+        if len(cond) > 0 {
+            where := dbutil.ParseCond(cond...)
+            db = db.Where(where[0], where[1:]...)
+        }
+        return db.Omit("id").Updates(update).Error
+    }
+snippet mydbdelete
+    // Delete deletes $1 from database
+    func (*DBService) Delete(db *gorm.DB, cond ...interface{}) error {
+        if len(cond) == 1 {
+            switch md := cond[0].(type) {
+            case *model.$0:
+                return db.Delete(md).Error
+            case model.$0:
+                return db.Delete(&md).Error
+            }
+        }
+        where := dbutil.ParseCond(cond...)
+        return db.Delete(model.$0{}, where...).Error
+    }
+snippet configawsserver
+    package config
+
+    // Configuration holds data necessary for configuring application
+    type Configuration struct {
+        AppName             string   `env:"AWS_LAMBDA_FUNCTION_NAME"`
+        Stage               string   `env:"UP_STAGE"`
+        Host                string   `env:"HOST"`
+        Port                int      `env:"PORT"`
+        ReadTimeout         int      `env:"READ_TIMEOUT"`
+        WriteTimeout        int      `env:"WRITE_TIMEOUT"`
+        AllowOrigins        []string `env:"ALLOW_ORIGINS"`
+        Debug               bool     `env:"DEBUG"`
+        DbLog               bool     `env:"DB_LOG"`
+        DbPsn               string   `env:"DB_PSN"`
+        JwtSecret           string   `env:"JWT_SECRET"`
+        JwtDuration         int      `env:"JWT_DURATION"`
+        JwtSigningAlgorithm string   `env:"JWT_SIGNINGALGORITHM"`
+        AwsRegion           string   `env:"AWS_REGION"`
+    }
+snippet mainmeta
+    // $0 API
+    //
+    // ## Authentication
+    // All API endpoints within ${1:\`/cms/v1/\`} require authentication. Firstly, grab the "access_token" from the response of:
+    //
+    // - \`/cms/login\` for CMS client
+    //
+    // Then include this header in all API calls:
+    // \`\`\`
+    // Authorization: Bearer ${access_token}
+    // \`\`\`
+    //
+    // For testing directly on this Swagger page, use the \`Authorize\` button right here bellow.
+    //
+    // Terms Of Service: N/A
+    //
+    //     Host: %{HOST}
+    //     Version: 1.0.0
+    //     Contact: Hieu Tran <${2:hieu@buuuk.com}>
+    //
+    //     Consumes:
+    //     - application/json
+    //
+    //     Produces:
+    //     - application/json
+    //
+    //     Security:
+    //     - login: []
+    //     - bearer: []
+    //
+    //     SecurityDefinitions:
+    //     login:
+    //         type: oauth2
+    //         tokenUrl: /cms/login
+    //         refreshUrl: /cms/refresh
+    //         flow: password
+    //     bearer:
+    //          type: apiKey
+    //          name: Authorization
+    //          in: header
+    //
+    // swagger:meta

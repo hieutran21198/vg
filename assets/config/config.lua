@@ -15,11 +15,19 @@ require "predefine.formatters"
 require "predefine.linters"
 
 MAIN.plugin_manager.store {
-    ["altercation/vim-colors-solarized"] = {},
-    ["morhetz/gruvbox"] = {},
-    ["AlessandroYorba/Alduin"] = {},
-    ["mangeshrex/uwu.vim"] = {},
-    ["jacoborus/tender.vim"] = {},
+    ["projekt0n/github-nvim-theme"] = {
+        config = function()
+            require "github-theme".setup()
+        end
+    },
+    ["therubymug/vim-pyte"] = {},
+    ["ayu-theme/ayu-vim"] = {
+        config = function()
+            MAIN.g.set {
+                ["ayucolor"] = "mirage"
+            }
+        end
+    },
     --
     ["ray-x/go.nvim"] = {
         requires = {"nvim-treesitter/nvim-treesitter"},
@@ -29,7 +37,9 @@ MAIN.plugin_manager.store {
                 return
             end
             MAIN.autocmds.set {
-                _auto_format_go = {{"BufWritePre", "*.go", ":silent! lua require('go.format').goimport()"}}
+                _auto_format_go = {
+                    {"BufWritePre", "*.go", ":silent! lua require('go.format').gofmt()"}
+                }
             }
             local on_attach = function(_, bufnr)
                 MAIN.keymappings.set {
@@ -64,7 +74,7 @@ MAIN.plugin_manager.store {
                     if server_name ~= "gopls" then
                         return opts
                     end
-                    MAIN.settings["lspconfig"].set_on_attach(opts, on_attach)
+                    MAIN.settings["lspconfig"].bind_on_attach(opts, on_attach)
                     return opts
                 end
             }

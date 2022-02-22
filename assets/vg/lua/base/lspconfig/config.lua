@@ -15,7 +15,7 @@ utils.require_dep(
                     return opts
                 end,
                 function(opts, _)
-                    MAIN.settings["lspconfig"].set_on_attach(
+                    MAIN.settings["lspconfig"].bind_on_attach(
                         opts,
                         function(_, bufnr)
                             MAIN.keymappings.set {
@@ -70,7 +70,7 @@ utils.require_dep(
                     table.insert(MAIN.settings["lspconfig"].custom_options, opt_fn)
                 end
             end,
-            set_on_attach = function(opts, on_attach)
+            bind_on_attach = function(opts, on_attach)
                 local def_on_attach = opts.on_attach
                 opts.on_attach = function(client, bufnr)
                     if def_on_attach ~= nil and type(def_on_attach) == "function" then
@@ -90,10 +90,10 @@ utils.require_dep(
                             name = "LSP Installer",
                             ["I"] = {"<cmd>LspInfo<cr>", "LSP Information"},
                             ["r"] = {"<cmd>LspRestart<cr>", "LSP restart"},
-                            ["i"] = {":LspInstall ", "LSP install {...protocols}"},
+                            ["i"] = {":LspInstall ", "LSP install ...protocols"},
                             ["l"] = {"<cmd>LspPrintInstalled<cr>", "LSP list installed protocols"},
                             ["x"] = {"<cmd>LspStop<cr>", "LSP stop"},
-                            ["u"] = {":LspUninstall ", "LSP uninstall {...protocols}"}
+                            ["u"] = {":LspUninstall ", "LSP uninstall ...protocols"}
                         },
                         ["z"] = {"<cmd>LspRestart<cr>", "LSP restart"}
                     }

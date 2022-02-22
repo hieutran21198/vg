@@ -10,9 +10,9 @@ snippet service
         return s
     }
 snippet model
-    // $0 ${2:represents the $1 model}
+    // $1 ${3:represents the $2 model}
     // swagger:model
-    type $0 struct {
+    type $1 struct {
         Base
     }
 snippet basemodel
@@ -26,9 +26,9 @@ snippet basemodel
     // Base contains common fields for all models
     // Do not use gorm.Model because of uint ID
     type Base struct {
-        ID        int       `json:"id" gorm:"primary_key"`
-        CreatedAt time.Time `json:"created_at"`
-        UpdatedAt time.Time `json:"updated_at"`
+        ID        int       \`json:"id" gorm:"primary_key"\`
+        CreatedAt time.Time \`json:"created_at"\`
+        UpdatedAt time.Time \`json:"updated_at"\`
     }
 
     // NormalizeUID util
@@ -115,20 +115,20 @@ snippet configawsserver
 
     // Configuration holds data necessary for configuring application
     type Configuration struct {
-        AppName             string   `env:"AWS_LAMBDA_FUNCTION_NAME"`
-        Stage               string   `env:"UP_STAGE"`
-        Host                string   `env:"HOST"`
-        Port                int      `env:"PORT"`
-        ReadTimeout         int      `env:"READ_TIMEOUT"`
-        WriteTimeout        int      `env:"WRITE_TIMEOUT"`
-        AllowOrigins        []string `env:"ALLOW_ORIGINS"`
-        Debug               bool     `env:"DEBUG"`
-        DbLog               bool     `env:"DB_LOG"`
-        DbPsn               string   `env:"DB_PSN"`
-        JwtSecret           string   `env:"JWT_SECRET"`
-        JwtDuration         int      `env:"JWT_DURATION"`
-        JwtSigningAlgorithm string   `env:"JWT_SIGNINGALGORITHM"`
-        AwsRegion           string   `env:"AWS_REGION"`
+        AppName             string   \`env:"AWS_LAMBDA_FUNCTION_NAME"\`
+        Stage               string   \`env:"UP_STAGE"\`
+        Host                string   \`env:"HOST"\`
+        Port                int      \`env:"PORT"\`
+        ReadTimeout         int      \`env:"READ_TIMEOUT"\`
+        WriteTimeout        int      \`env:"WRITE_TIMEOUT"\`
+        AllowOrigins        []string \`env:"ALLOW_ORIGINS"\`
+        Debug               bool     \`env:"DEBUG"\`
+        DbLog               bool     \`env:"DB_LOG"\`
+        DbPsn               string   \`env:"DB_PSN"\`
+        JwtSecret           string   \`env:"JWT_SECRET"\`
+        JwtDuration         int      \`env:"JWT_DURATION"\`
+        JwtSigningAlgorithm string   \`env:"JWT_SIGNINGALGORITHM"\`
+        AwsRegion           string   \`env:"AWS_REGION"\`
     }
 snippet mainmeta
     // $0 API
@@ -173,3 +173,38 @@ snippet mainmeta
     //          in: header
     //
     // swagger:meta
+snippet rqrp
+    // $1Request represents the request payload of the API $1.
+    type $1Request struct {
+
+    }
+
+    // $1Response represents the returning response payload of the API $1.
+    type $1Response struct {
+
+    }
+snippet servicehandler
+    // $2 $3.
+    func (s *$1) $2(c echo.Context, req *$2Request) (resp *$2Response, err error) {
+
+        resp = &$2Response{}
+        return resp, nil
+    }
+snippet servicehttp
+    package $1
+    
+    // Service represents $1 interface that used by HTTP.
+    type Service interface {
+
+    }
+    // HTTP represents $1 http service.
+    type HTTP struct {
+      svc Service
+    }
+
+    // NewHTTP creates new instance of HTTP.
+    func NewHTTP(svc Service, eg *echo.Group) *HTTP {
+        h := &HTTP{svc: svc}
+
+        return h
+    }

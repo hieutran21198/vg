@@ -8,8 +8,4 @@ MAIN.plugin_manager.store {
     ["nvim-telescope/telescope-file-browser.nvim"] = {
         config = MAIN.configs["telescopeext.file_browser"]
     },
-    ["nvim-telescope/telescope-smart-history.nvim"] = {
-        config = MAIN.configs["telescopeext.smart_history"],
-        requires = {"tami5/sqlite.lua"}
-    }
 }

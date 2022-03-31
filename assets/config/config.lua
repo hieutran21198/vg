@@ -51,8 +51,8 @@ MAIN.plugin_manager.store {
                                     ["p"] = {"<cmd>GoFillStruct<cr>", "Fill struct"},
                                     ["i"] = {"<cmd>GoInstallBinaries<cr>", "Install binaries"},
                                     ["u"] = {"<cmd>GoInstallBinaries<cr>", "Update binaries"},
-                                    ["t"] = {"<cmd>GoAddTag<cr>", "Add tags"},
-                                    ["T"] = {"<cmd>GoRmTag<cr>", "Remove tags"},
+                                    ["t"] = {":GoAddTag ", "Add tags"},
+                                    ["T"] = {":GoRmTag ", "Remove tags"},
                                     ["I"] = {"<cmd>GoImpl <cr>", "Implement {receiver} {interface}"},
                                     ["A"] = {"<cmd>GoAlt!<cr>", "Open alternative file"},
                                     ["l"] = {"<cmd>GoLint<cr>", "Lint file"}
@@ -83,7 +83,7 @@ MAIN.plugin_manager.store {
                 gopls_cmd = MAIN.settings["nvim-lsp-installer"].install_root_dir .. "/go/gopls",
                 gofmt = "gofumpt",
                 max_line_len = 120,
-                tag_transform = false,
+                tag_transform = true,
                 test_template = "",
                 test_template_dir = "",
                 comment_placeholder = "",
@@ -97,7 +97,7 @@ MAIN.plugin_manager.store {
                 lsp_on_attach = nil,
                 lsp_codelens = true,
                 gopls_remote_auto = true,
-                fillstruct = "gopls",
+                fillstruct = "fillstruct",
                 lsp_diag_hdlr = true,
                 dap_debug = true,
                 test_runner = "go",
@@ -109,5 +109,5 @@ MAIN.plugin_manager.store {
 }
 
 MAIN.options.manage {
-    transparent = false
+    transparent = true
 }

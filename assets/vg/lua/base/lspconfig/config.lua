@@ -4,6 +4,9 @@ utils.require_dep(
     "lspconfig",
     function()
         MAIN.settings["lspconfig"] = {
+            opts = {
+                
+            },
             custom_options = {
                 function(opts, name)
                     if name == "sumneko_lua" then
@@ -14,7 +17,7 @@ utils.require_dep(
                     end
                     return opts
                 end,
-                function(opts, _)
+                function(opts)
                     MAIN.settings["lspconfig"].bind_on_attach(
                         opts,
                         function(_, bufnr)

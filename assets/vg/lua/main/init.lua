@@ -88,12 +88,11 @@ MAIN.bootstrap = function(params)
     MAIN.plugin_manager.compile()
 
     MAIN.get_colorscheme()
+    if MAIN.colorscheme ~= nil and MAIN.colorscheme ~= "" then
+        vim.cmd("colorscheme " .. MAIN.colorscheme)
+    end
     MAIN.options.compile()
     MAIN.g.compile()
     MAIN.keymappings.compile()
     MAIN.autocmds.compile()
-    -- pcall(MAIN.get_colorscheme)
-    if MAIN.colorscheme ~= nil and MAIN.colorscheme ~= "" then
-        vim.cmd("colorscheme " .. MAIN.colorscheme)
-    end
 end

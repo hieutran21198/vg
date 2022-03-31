@@ -27,10 +27,6 @@ utils.require_dep(
                         "--smart-case",
                         "-u"
                     },
-                    history = {
-                        path = MAIN.paths.app_runtime_dir .. "/databases/telescope_history.sqlite3",
-                        limit = 100
-                    }
                 },
                 prompt_prefix = " ",
                 selection_caret = " ",
@@ -95,12 +91,4 @@ MAIN.configs["telescopeext.file_browser"] = function()
         return
     end
     telescope.load_extension "file_browser"
-end
-
-MAIN.configs["telescopeext.smart_history"] = function()
-    local ok, telescope = pcall(require, "telescope")
-    if not ok then
-        return
-    end
-    telescope.load_extension "smart_history"
 end
